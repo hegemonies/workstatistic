@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workstatistic/stopwatch/page/stopwatch_page.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -33,9 +34,7 @@ class MainScreenNavigationState extends State<MainScreenNavigation> {
         },
         children: <Widget>[
           Center(
-            child: Container(
-              child: Text("Today page"),
-            ),
+            child: Container(height: 500.0, child: StopwatchPage()),
           ),
           Center(
             child: Container(
