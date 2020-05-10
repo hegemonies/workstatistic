@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workstatistic/stopwatch/page/stopwatch_page.dart';
+import 'package:workstatistic/routes/today_route.dart';
 
 class MainScreen extends StatelessWidget {
   @override
@@ -34,7 +34,7 @@ class MainScreenNavigationState extends State<MainScreenNavigation> {
         },
         children: <Widget>[
           Center(
-            child: Container(height: 500.0, child: StopwatchPage()),
+            child: Container(height: 500.0, child: TodayRoute().getRoute()),
           ),
           Center(
             child: Container(

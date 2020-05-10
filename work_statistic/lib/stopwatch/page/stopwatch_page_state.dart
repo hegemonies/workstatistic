@@ -35,16 +35,66 @@ class StopwatchPageState extends State<StopwatchPage> {
         child: Text(text, style: roundTextStyle), onPressed: callback);
   }
 
+  String getGreetingTextWithDate() {
+    final currentDateTime = DateTime.now();
+
+    var weekDay = "";
+
+    switch(currentDateTime.weekday) {
+      case 1:
+        weekDay = "monday";
+      break;
+
+      case 2:
+        weekDay = "tuesday";
+      break;
+
+      case 3:
+        weekDay = "wednesday";
+        break;
+
+      case 4:
+        weekDay = "thursday";
+        break;
+
+      case 5:
+        weekDay = "friday";
+        break;
+
+      case 6:
+        weekDay = "saturday";
+        break;
+
+      case 7:
+        weekDay = "sunday";
+        break;
+    }
+
+    final greeting = "Hi, today $weekDay";
+    final currentDateInFormat = "${currentDateTime.day}-${currentDateTime.month}-${currentDateTime.year}";
+    return "$greeting\n$currentDateInFormat";
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Expanded(
+          child: Text(
+              getGreetingTextWithDate(),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 48,
+              color: Colors.black45
+            ),
+          ),
+        ),
+        Expanded(
           child: StopwatchText(dependencies: dependencies),
         ),
         Expanded(
-            flex: 0,
+//            flex: 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
