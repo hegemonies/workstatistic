@@ -4,17 +4,10 @@ import 'package:flutter/widgets.dart';
 import 'package:workstatistic/stopwatch/page/stopwatch_page.dart';
 import 'package:workstatistic/stopwatch/stopwatch_text/stopwatch_text.dart';
 
-import '../models/dependencies.dart';
-
 class StopwatchPageState extends State<StopwatchPage> {
-
   void leftButtonPressed() {
     setState(() {
-      if (widget.dependencies.stopwatch.isRunning) {
-        print("${widget.dependencies.stopwatch.elapsedMilliseconds}");
-      } else {
-        widget.dependencies.stopwatch.reset();
-      }
+      widget.dependencies.stopwatch.reset();
     });
   }
 
@@ -32,26 +25,23 @@ class StopwatchPageState extends State<StopwatchPage> {
     TextStyle roundTextStyle =
         const TextStyle(fontSize: 24.0, color: Colors.white);
     return FlatButton(
-      child: Text(text, style: roundTextStyle),
-      shape: ContinuousRectangleBorder(),
-      color: Colors.blueGrey,
-      onPressed: callback
-    );
+        child: Text(text, style: roundTextStyle),
+        shape: RoundedRectangleBorder(),
+        color: Theme.of(context).primaryColor,
+        onPressed: callback);
   }
 
-  String getGreetingTextWithDate() {
-    final currentDateTime = DateTime.now();
-
+  String getWeekDay(DateTime dateTime) {
     var weekDay = "";
 
-    switch(currentDateTime.weekday) {
+    switch (dateTime.weekday) {
       case 1:
         weekDay = "monday";
-      break;
+        break;
 
       case 2:
         weekDay = "tuesday";
-      break;
+        break;
 
       case 3:
         weekDay = "wednesday";
@@ -74,33 +64,46 @@ class StopwatchPageState extends State<StopwatchPage> {
         break;
     }
 
-    final greeting = "Hi, today is $weekDay";
-    final currentDateInFormat = "${currentDateTime.day}-${currentDateTime.month}-${currentDateTime.year}";
-    return "$greeting\n$currentDateInFormat";
+    return "$weekDay ";
+  }
+
+  String getGreetings() {
+    return "Hi, today is ";
+  }
+
+  String getDateInFormat(DateTime dateTime) {
+    return "${dateTime.day}-${dateTime.month}-${dateTime.year}";
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentDateTime = DateTime.now();
+    String greetings = getGreetings();
+    String weekDay = getWeekDay(currentDateTime);
+    final dateInFormat = getDateInFormat(currentDateTime);
+
     return new Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        Text(
-          getGreetingTextWithDate(),
+        RichText(
           textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 46,
-              color: Colors.black45
-          ),
+          text: TextSpan(
+              style: TextStyle(fontSize: 46, color: Colors.black45),
+              children: [
+                TextSpan(text: greetings),
+                TextSpan(
+                    text: weekDay,
+                    style: TextStyle(color: Theme.of(context).accentColor)),
+                TextSpan(text: dateInFormat)
+              ]),
         ),
         StopwatchText(dependencies: widget.dependencies),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            buildButton("Reset", leftButtonPressed),
             buildButton(
-                widget.dependencies.stopwatch.isRunning ? "lap" : "reset",
-                leftButtonPressed),
-            buildButton(
-                widget.dependencies.stopwatch.isRunning ? "stop" : "start",
+                widget.dependencies.stopwatch.isRunning ? "Stop" : "Start",
                 rightButtonPressed),
           ],
         ),
