@@ -1,7 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'file:///E:/git/workstatistic/work_statistic/lib/stopwatch/models/dependencies.dart';
+import 'package:workstatistic/stopwatch/models/dependencies.dart';
 import 'package:workstatistic/stopwatch/page/stopwatch_page.dart';
 
 //class TodayRoute extends StatefulWidget {
@@ -25,8 +23,16 @@ import 'package:workstatistic/stopwatch/page/stopwatch_page.dart';
 //  }
 //}
 
-class TodayRoute {
+class TodayRoute extends StatelessWidget {
+
+  final Dependencies dependencies = Dependencies();
+
   StatefulWidget getRoute() {
-    return StopwatchPage();
+    return StopwatchPage(dependencies);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StopwatchPage(dependencies);
   }
 }

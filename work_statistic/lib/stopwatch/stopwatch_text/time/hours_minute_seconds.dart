@@ -9,5 +9,5 @@ class HoursMinutesSeconds extends StatefulWidget {
   final Dependencies dependencies;
 
   HoursMinutesSecondsState createState() =>
-      new HoursMinutesSecondsState(dependencies: dependencies);
+      new HoursMinutesSecondsState();
 }
