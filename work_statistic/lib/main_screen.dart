@@ -28,10 +28,19 @@ class MainScreenNavigation extends StatefulWidget {
 class MainScreenNavigationState extends State<MainScreenNavigation> {
   PageController pageController = PageController(initialPage: 0);
   final countOfPage = 3;
-  double bottomAppBarHeight(BuildContext context) =>
-      MediaQuery.of(context).size.height / 10;
+
+  double bottomAppBarHeight(BuildContext context) {
+    final height = MediaQuery.of(context).size.height / 10;
+    if (height > 75) {
+      return 75;
+    } else {
+      return height;
+    }
+  }
+
   double pageHeight(BuildContext context) =>
-      MediaQuery.of(context).size.height * 9 / 10;
+      MediaQuery.of(context).size.height - bottomAppBarHeight(context);
+
   double bottomAppBarButtonWidth(BuildContext context) =>
       MediaQuery.of(context).size.width / countOfPage;
 
@@ -39,10 +48,8 @@ class MainScreenNavigationState extends State<MainScreenNavigation> {
         controller: pageController,
         children: <Widget>[
           Center(
-            child: Container(
-                height: pageHeight(context),
-                child: widget.todayPage
-            ),
+            child:
+                Container(height: pageHeight(context), child: widget.todayPage),
           ),
           Center(
             child: Container(
@@ -63,7 +70,7 @@ class MainScreenNavigationState extends State<MainScreenNavigation> {
         width: bottomAppBarButtonWidth(context),
         child: FlatButton(
           splashColor: Theme.of(context).splashColor,
-          textColor:  Theme.of(context).primaryColor,
+          textColor: Theme.of(context).primaryColor,
           padding: EdgeInsets.all(17.0),
           onPressed: () {
             setState(() {
@@ -72,7 +79,7 @@ class MainScreenNavigationState extends State<MainScreenNavigation> {
           },
           child: Column(
             children: <Widget>[Icon(icon), Text(text)],
-        ),
+          ),
         ),
       );
 
