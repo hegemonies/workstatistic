@@ -9,7 +9,7 @@ class MainScreen extends StatelessWidget {
         title: "Bravo Work Statistic",
         theme: ThemeData(
           primarySwatch: Colors.indigo,
-          accentColor: Colors.amber,
+          accentColor: Colors.indigoAccent,
           canvasColor: Colors.white,
         ),
         home: MainScreenNavigation());
@@ -28,6 +28,7 @@ class MainScreenNavigation extends StatefulWidget {
 class MainScreenNavigationState extends State<MainScreenNavigation> {
   PageController pageController = PageController(initialPage: 0);
   final countOfPage = 3;
+  var currentIndex = 0;
 
   double bottomAppBarHeight(BuildContext context) {
     final height = MediaQuery.of(context).size.height / 10;
@@ -65,42 +66,33 @@ class MainScreenNavigationState extends State<MainScreenNavigation> {
         physics: PageScrollPhysics(),
       );
 
-  createBottomAppBarButton(int pageNumber, IconData icon, String text) =>
-      Container(
-        width: bottomAppBarButtonWidth(context),
-        child: FlatButton(
-          splashColor: Theme.of(context).splashColor,
-          textColor: Theme.of(context).primaryColor,
-          padding: EdgeInsets.all(17.0),
-          onPressed: () {
+  createBottomNavigationBarItem(IconData icon, String title) =>
+      BottomNavigationBarItem(
+          icon: Icon(icon),
+          title: Text(title));
+
+  bottomNavigationBar() => BottomNavigationBar(
+          fixedColor: Theme.of(context).primaryColor,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          onTap: (index) {
             setState(() {
-              pageController.jumpToPage(pageNumber);
+              currentIndex = index;
+              pageController.animateToPage(currentIndex,
+                  duration: Duration(milliseconds: 300), curve: Curves.ease);
             });
           },
-          child: Column(
-            children: <Widget>[Icon(icon), Text(text)],
-          ),
-        ),
-      );
-
-  bottomAppBar() => BottomAppBar(
-          child: Container(
-        height: bottomAppBarHeight(context),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            createBottomAppBarButton(0, Icons.today, "Today"),
-            createBottomAppBarButton(1, Icons.show_chart, "Analytics"),
-            createBottomAppBarButton(2, Icons.more_horiz, "More")
-          ],
-        ),
-      ));
+          items: [
+            createBottomNavigationBarItem(Icons.today, "Today"),
+            createBottomNavigationBarItem(Icons.show_chart, "Analytics"),
+            createBottomNavigationBarItem(Icons.more_horiz, "More"),
+          ]);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: pageView(),
-      bottomNavigationBar: bottomAppBar(),
+      bottomNavigationBar: bottomNavigationBar(),
     );
   }
 }

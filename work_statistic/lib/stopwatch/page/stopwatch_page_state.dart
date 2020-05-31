@@ -22,13 +22,12 @@ class StopwatchPageState extends State<StopwatchPage> {
   }
 
   Widget buildButton(String text, VoidCallback callback) {
-    return RaisedButton(
+    return OutlineButton(
+      highlightElevation: 8,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 8,
-      animationDuration: Duration(seconds: 100),
       child: Text(text),
-      color: Theme.of(context).primaryColor,
-      textColor: Colors.white,
+//      color: Theme.of(context).primaryColor,
+      textColor: Theme.of(context).primaryColor,
       onPressed: callback,
     );
   }
@@ -87,37 +86,24 @@ class StopwatchPageState extends State<StopwatchPage> {
     return new Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        RichText(
-          textAlign: TextAlign.left,
-          text: TextSpan(
-              style: TextStyle(
-                fontWeight: FontWeight.w300,
-                  fontSize: 36,
-                  color: Colors.black45
-              ),
-              children: [
-                TextSpan(text: greetings),
-                TextSpan(
-                    text: weekDay,
-                    style: TextStyle(color: Theme.of(context).accentColor)),
-                TextSpan(text: dateInFormat)
-              ]),
+        Container(
+          padding: EdgeInsets.only(left: 12),
+          child: RichText(
+            textAlign: TextAlign.left,
+            text: TextSpan(
+                style: TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 36,
+                    color: Colors.black45),
+                children: [
+                  TextSpan(text: greetings),
+                  TextSpan(
+                      text: weekDay,
+                      style: TextStyle(color: Theme.of(context).accentColor)),
+                  TextSpan(text: dateInFormat)
+                ]),
+          ),
         ),
-//        AnimatedDefaultTextStyle(
-//          style: widget.dependencies.stopwatch.isRunning
-//              ? TextStyle(
-//                  fontWeight: FontWeight.w200,
-//                  color: Theme.of(context).primaryColor,
-//                  shadows: <Shadow>[
-//                      Shadow(
-//                          offset: Offset.fromDirection(-100.0),
-//                          color: Theme.of(context).accentColor,
-//                          blurRadius: 1.0)
-//                    ])
-//              : TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),
-//          child: StopwatchText(dependencies: widget.dependencies),
-//          duration: Duration(milliseconds: 1),
-//        ),
         StopwatchText(dependencies: widget.dependencies),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

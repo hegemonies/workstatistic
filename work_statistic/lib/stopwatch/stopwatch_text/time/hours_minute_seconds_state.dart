@@ -74,6 +74,8 @@ class HoursMinutesSecondsState extends State<HoursMinutesSeconds> {
   @override
   Widget build(BuildContext context) {
     setStopwatchText();
+    final animationDuration = 300;
+
     return Container(
         height: 300,
         child: Row(
@@ -81,7 +83,7 @@ class HoursMinutesSecondsState extends State<HoursMinutesSeconds> {
           children: <Widget>[
             AnimatedSwitcher(
               child: hoursText,
-              duration: Duration(milliseconds: 400),
+              duration: Duration(milliseconds: animationDuration),
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return ScaleTransition(child: child, scale: animation);
               },
@@ -89,7 +91,7 @@ class HoursMinutesSecondsState extends State<HoursMinutesSeconds> {
             Text(":", style: textStyle),
             AnimatedSwitcher(
               child: minutesText,
-              duration: Duration(milliseconds: 400),
+              duration: Duration(milliseconds: animationDuration),
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return ScaleTransition(child: child, scale: animation);
               },
@@ -97,7 +99,7 @@ class HoursMinutesSecondsState extends State<HoursMinutesSeconds> {
             Text(":", style: textStyle),
             AnimatedSwitcher(
               child: secondsText,
-              duration: Duration(milliseconds: 400),
+              duration: Duration(milliseconds: animationDuration),
               transitionBuilder: (Widget child, Animation<double> animation) {
                 return ScaleTransition(child: child, scale: animation);
               },
